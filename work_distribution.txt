@@ -1,0 +1,15 @@
+SAJAL
+1. Apply K-Means to your dataset. Use adjusted rand index to evaluate your results. Run K-Means for multiple rounds with different random initializations. Do the results vary for different initializations?
+
+2. Evaluate how results change with respect to parameter K (using adjusted rand index). Since
+random initialization impacts the results, run K-means multiple times and show the average result.
+
+
+RUBABA
+3. Apply Gaussian mixture model and evaluate the results (using adjusted rand index). Try several
+different K.
+
+
+AMATUR
+4. Use PCA to reduce the feature space to 2 dimensions. Apply K-Means and Gaussian mixture to 2-
+dimensional data. Compare the results using scatter plot. Try several different numbers of clusters.
