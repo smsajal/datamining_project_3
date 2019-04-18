@@ -13,7 +13,7 @@ data=read.csv("data/training.csv")
 x <- subset(data, select=-class)
 y <- data$class
 
-x.wf <- data[which(as.factor(data$class) == ("impervious") | as.factor(data$class) == ("water") | as.factor(data$class) == ("forest")),]
+x.wf <- data[which(as.factor(data$class) == ("water") | as.factor(data$class) == ("farm")),]
 y.wf <- x.wf$class
 x.wf <- subset(x.wf , select = -class)
 
@@ -37,6 +37,25 @@ gmm$classification
 adjR = list()
 gmm <- Mclust(x.wf, G = 2, verbose = interactive())
 adjR[1] = adjustedRandIndex(gmm$classification, y.wf)
+
+
+gmm2 <- Mclust(x.wf, G = 3, verbose = interactive())
+adjR[2] = adjustedRandIndex(gmm2$classification, y.wf)
+
+
+gmm3 <- Mclust(x.wf, G = 4, verbose = interactive())
+adjR[3] = adjustedRandIndex(gmm3$classification, y.wf)
+
+
+gmm4 <- Mclust(x.wf, G = 5, verbose = interactive())
+adjR[4] = adjustedRandIndex(gmm4$classification, y.wf)
+
+
+gmm5 <- Mclust(x.wf, G = 6, verbose = interactive())
+adjR[5] = adjustedRandIndex(gmm5$classification, y.wf)
+
+plot(x= c(2,3, 4, 5, 6), y = adjR, type = "b", pch = 22, xlab = "k", ylab = "adjusted Rand index")
+
 
 gmm2 <- Mclust(x.wf, G=2, prior = priorControl(functionName = "defaultPrior", shrinkage = 0.1), verbose = TRUE)
 adjR[2] = adjustedRandIndex(gmm2$classification, y.wf)  # 0.06407
