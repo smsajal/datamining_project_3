@@ -1,4 +1,5 @@
 library("mclust")
+library("fossil")
 
 rm(list=ls())
 
@@ -12,7 +13,7 @@ data=read.csv("data/training.csv")
 x <- subset(data, select=-class)
 y <- data$class
 
-x.wf <- data[which(as.factor(data$class) == ("water") | as.factor(data$class) == ("forest")),]
+x.wf <- data[which(as.factor(data$class) == ("impervious") | as.factor(data$class) == ("water") | as.factor(data$class) == ("forest")),]
 y.wf <- x.wf$class
 x.wf <- subset(x.wf , select = -class)
 
@@ -23,18 +24,19 @@ x.wf <- subset(x.wf , select = -class)
 # plot(bic)
 ?mclustBIC
 
-gmm <- Mclust(x.wf, G = 2, verbose = interactive(), initialization = list(hc(x.wf, modelName = "VVV")))
+gmm <- Mclust(x.wf, G = 2, verbose = interactive())
 summary(gmm, parameters = TRUE)
 adjustedRandIndex(gmm$classification, y.wf)
+adjustedRandIndex(y.wf, gmm$classification)
+
 
 gmm$modelName
 gmm$classification
 
 
 adjR = list()
-
+gmm <- Mclust(x.wf, G = 2, verbose = interactive())
 adjR[1] = adjustedRandIndex(gmm$classification, y.wf)
-?Mclust
 
 gmm2 <- Mclust(x.wf, G=2, prior = priorControl(functionName = "defaultPrior", shrinkage = 0.1), verbose = TRUE)
 adjR[2] = adjustedRandIndex(gmm2$classification, y.wf)  # 0.06407
@@ -51,3 +53,5 @@ gmm5 <- Mclust(x.wf, G=2, prior = priorControl(functionName = "defaultPrior", sh
 adjR[5] = adjustedRandIndex(gmm5$classification, y.wf)  # 0.06387
 
 plot(x= c(0,.1, .2, .4, .7), y = adjR, type = "b", pch = 22, xlab = "prior shrinkage", ylab = "adjusted Rand index")
+
+adjR[2]
