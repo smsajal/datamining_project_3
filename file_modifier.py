@@ -51,8 +51,8 @@ def hello():
 
 
 def main():
-    inputFile = "data/training_k.csv"
-    outputFile = "data/training_k_final.csv"
+    inputFile = "data/Frogs_MFCCs.csv"
+    outputFile = "data/Frogs_MFCCs_modified.csv"
     header, classIndexes, originalContent = getInputFileContent(fileName=inputFile)
     newContent = getNewContent(classIndexes, originalContent)
     writeToNewFile(header=header, newContent=newContent, newFileName=outputFile)

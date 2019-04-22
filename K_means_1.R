@@ -4,30 +4,39 @@ library("mclust")
 rm(list=ls())
 setwd("/Users/sxs2561/Documents/AcademicAssignments/stat_557/project_3/datamining_project_3/data")
 
-set.seed(391)
+
 #### READ DATA
 ########### Read data ##########
-data.test=read.csv("testing.csv")
-data.train=read.csv("training.csv")
-data=read.csv("training.csv")
+# data.test=read.csv("testing.csv")
+# data.train=read.csv("training.csv")
+data=read.csv("Frogs_MFCCs.csv")
+data<-na.omit(data)
 
-x <- subset(data, select=-class)
-y <- data$class
+# 
+# x <- subset(data[,1:22], select=-Family)
+# y <- data$Family
+# 
 
-x.wf <- data[which(as.factor(data$class) == ("water") | as.factor(data$class) == ("farm")),]
-y.wf <- x.wf$class
-y.wf<-as.vector(y.wf)
-x.wf <- subset(x.wf , select = -class)
-is.data.frame(x.wf)
+x <- subset(data[,1:22])
+y.family <- data$Family
+y.genus <- data$Genus
+y.species <- data$Species
+y.id <- data$RecordID
+# x.wf <- data[which(as.factor(data$class) == ("water") | as.factor(data$class) == ("farm")),]
+# y.wf <- x.wf$class
+# y.wf<-as.vector(y.wf)
+# x.wf <- subset(x.wf , select = -class)
+# is.data.frame(x.wf)
 
-
+is.data.frame(x)
 ### making random initialization
-numberOfClusters=6
-centerIndexes=sample(1:nrow(x.wf),numberOfClusters,replace = FALSE)
+set.seed(9)
+numberOfClusters=4
+centerIndexes=sample(1:nrow(x),numberOfClusters,replace = FALSE)
 print(centerIndexes)
-centers=x.wf[centerIndexes,c(0:length(x.wf))]
+centers=x[centerIndexes,c(0:length(x))]
 #### APPLIED KMEANS CLUSTERING WITH 2 CLUSTERS
 # set.seed(7)
-km.out=kmeans(x = x.wf,centers=centers)
+km.out=kmeans(x =x,centers =numberOfClusters)
 
-print(adjustedRandIndex(y.wf,km.out$cluster))
+print(adjustedRandIndex(y.species,km.out$cluster))
