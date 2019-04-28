@@ -42,13 +42,13 @@ print(dim(data)) #5743   26
 #aRandIdx=c()
 #for (i in 1:100) {
 set.seed(3)
-numberOfClusters = 3
+numberOfClusters = 4
 centerIndexes = sample(1:nrow(x.wf), numberOfClusters, replace = FALSE)
 centers = x.wf[centerIndexes, c(0:length(x.wf))]
 km.out = kmeans(x = x.wf, centers = centers)
 
 fviz_cluster(km.out,data=x.wf)
-?fviz_cluster()
+
 
 print('hello')    
     #aRandIdx[i]<-adjustedRandIndex(y.wf,km.out$cluster)
