@@ -39,17 +39,34 @@ for(i in 1:5)
   print(gmm$G)
 }
 
+a <- Sys.time()
+set.seed(9)
+gmm1 <- Mclust(x, G = 4, verbose = interactive())
+b <- Sys.time()
+trainTime = b-a
+print(trainTime)
+
 
 gmm <- Mclust(x, G = 1:15, verbose = interactive())
-dr <- MclustDR(gmm, lambda = 1)
-plot(dr, what = "scatterplot")
+dr <- MclustDR(gmm1, lambda = 1)
+plot(dr, what = "scatterplot", col.sep = "black")
+dr$class
 plot(dr, what = "evalues")
-
+?MclustDR
 drs <- MclustDRsubsel(dr)
 summary(drs)
 table(class, drs$class)
 plot(drs, what = "scatterplot")
 
+
+plot(dr$dir[,1], dr$dir[,2], col=c("red", "black", "white", "white", "blue", "green")[y.species])
+plot(dr$dir[,1], dr$dir[,2], col=c("blue", "black", "red", "green")[dr$class])
+
+
+
+y.species[4000:5000]
+print(dr$dir)
+length(dr$dir[[1]])
 gmm$G
 dr$G
 for(j in 3:3)
@@ -157,3 +174,10 @@ adjR[5] = adjustedRandIndex(gmm5$classification, y.species)  # 0.06333
 plot(x= c(0,.1, .2, .4, .7), y = adjR, type = "b", pch = 22, xlab = "prior shrinkage", ylab = "adjusted Rand index")
 
 adjR[2]
+
+?MclustDR
+mclust.options("emModelNames")
+?emControl()
+mclust.options("subset")
+mclust.options("hcModelName")
+mclust.options("hcUse")
